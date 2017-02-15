@@ -99,7 +99,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Mariano Conti** - *Initial work* - [PurpleBooth](https://github.com/nanexcool)
+* **Mariano Conti** - *Initial work* - [GitHub Profile](https://github.com/nanexcool)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
@@ -109,6 +109,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
+* Heavily inspired (and code copy pasted) from [Feedbase](https://github.com/dapphub/feedbase)
 * Inspiration
 * etc

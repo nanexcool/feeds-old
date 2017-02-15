@@ -64,7 +64,7 @@ function askForAddress(_type) {
 }
 
 function runMethod(type, method, args) {
-  // status.start();
+  status.start();
   utils.getNetwork().then((network) => {
     status.stop();
     prefs.network = network;
@@ -137,8 +137,9 @@ program
 
 program
   .command('feedbase <method> [args...]')
+  .alias('feed')
   .alias('f')
-  .description('xxx')
+  .description('interact with a feedbase contract')
   .action((method, args) => {
     runMethod('feedbase', method, args);
   });
@@ -146,7 +147,7 @@ program
 program
   .command('aggregator <method> [args...]')
   .alias('a')
-  .description('xxx')
+  .description('interact with a feed aggregator contract')
   .action((method, args) => {
     runMethod('aggregator', method, args);
   });

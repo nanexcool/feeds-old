@@ -1,31 +1,28 @@
 {
-  "name": "ds-feeds",
+  "name": "feeds",
   "version": "0.1.0",
   "description": "Command line app to manage feeds easily.",
   "main": "./feeds.js",
   "bin": {
-    "ds-feeds": "./feeds.js"
+    "feeds": "./feeds.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/makerdao/ds-feeds.git"
+    "url": "git+https://github.com/nanexcool/feeds.git"
   },
   "keywords": ["feedbase", "feed-aggregator", "ethereum"],
   "author": "Mariano Conti <nanexcool@gmail.com>",
   "contributors": [
-    {
-      "name": "Gonzalo Balabasquer",
-      "email": "gbalabasquer@gmail.com"
-    }
+    "Gonzalo Balabasquer <gbalabasquer@gmail.com>"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/makerdao/ds-feeds/issues"
+    "url": "https://github.com/nanexcool/feeds/issues"
   },
-  "homepage": "https://github.com/makerdao/ds-feeds#readme",
+  "homepage": "https://github.com/nanexcool/feeds#readme",
   "dependencies": {
     "clui": "^0.3.1",
     "commander": "^2.9.0",
