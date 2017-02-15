@@ -13,7 +13,11 @@
     "type": "git",
     "url": "git+https://github.com/nanexcool/feeds.git"
   },
-  "keywords": ["feedbase", "feed-aggregator", "ethereum"],
+  "keywords": [
+    "feedbase",
+    "feed-aggregator",
+    "ethereum"
+  ],
   "author": "Mariano Conti <nanexcool@gmail.com>",
   "contributors": [
     "Gonzalo Balabasquer <gbalabasquer@gmail.com>"
