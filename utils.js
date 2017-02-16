@@ -45,7 +45,6 @@ module.exports = {
       if (key.indexOf('bytes') ||
         key.indexOf('uint') ||
         key.indexOf('string')) {
-
         if (argsQuantity === (key.match(/,/g) || []).length + 1) {
           subMethod = key;
         }

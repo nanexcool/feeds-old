@@ -8,10 +8,10 @@ const web3 = new Web3(this.web3 ? this.web3.currentProvider : (
   new Web3.providers.HttpProvider(URL)
 ));
 
-if (!web3.isConnected()) {
-  const message = `Could not connect to Ethereum RPC server at ${URL}`;
-  console.log(message);
-  process.exit(1);
-}
+// if (!web3.isConnected()) {
+//   const message = `Could not connect to Ethereum RPC server at ${URL}`;
+//   console.log(message);
+//   // process.exit(1);
+// }
 
 module.exports = web3;

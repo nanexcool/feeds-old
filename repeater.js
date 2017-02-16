@@ -1,30 +1,30 @@
-const Aggregator = require('./lib/aggregator.js');
+const Repeater = require('./lib/aggregator.js');
 const web3 = require('./web3');
 
 module.exports = (address, env) => {
-  Aggregator.environments[env].aggregator.value = address;
-  Aggregator.class(web3, env);
+  Repeater.environments[env].aggregator.value = address;
+  Repeater.class(web3, env);
   const toString = x => web3.toAscii(x).replace(/\0/g, '');
 
-  const aggregator = Aggregator.objects.aggregator;
+  const repeater = Repeater.objects.aggregator;
 
-  aggregator.inspect = (id) => {
-    const owner = aggregator.owner(id);
+  repeater.inspect = (id) => {
+    const owner = repeater.owner(id);
     if (owner === '0x0000000000000000000000000000000000000000') {
-      return 'Aggregator not claimed';
+      return 'Repeater not claimed';
     }
     const result = {
       id: web3.toDecimal(id),
       owner,
-      label: toString(aggregator.label(id)),
-      feedsQuantity: web3.toDecimal(aggregator.feedsQuantity(id)),
-      minimumValid: web3.toDecimal(aggregator.minimumValid(id)),
-      value: web3.toDecimal(aggregator.tryGet.call(id)[0]),
+      label: toString(repeater.label(id)),
+      feedsQuantity: web3.toDecimal(repeater.feedsQuantity(id)),
+      minimumValid: web3.toDecimal(repeater.minimumValid(id)),
+      value: web3.toDecimal(repeater.tryGet.call(id)[0]),
     };
     return result;
   };
 
-  aggregator.filter = (options, callback) => {
+  repeater.filter = (options, callback) => {
     web3.eth.filter(Object.assign({
       address,
     }, options), (error, event) => {
@@ -38,5 +38,5 @@ module.exports = (address, env) => {
       }
     });
   };
-  return aggregator;
+  return repeater;
 };

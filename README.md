@@ -1,5 +1,5 @@
 # feeds
-Command line app to manage feeds from feedbase and feed aggregators easily.
+Command line app to read/write feeds and repeaters.
 
 ## Getting Started
 
@@ -10,7 +10,7 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```
-- Node
+- Recent version of node
 - Parity or Geth
 ```
 
@@ -28,7 +28,7 @@ End with an example of getting some data out of the system or using it for a lit
 
 ## Running the command line
 
-ds-feeds allows you to manage feedbase and aggregator feeds.
+ds-feeds allows you to manage feedbase and repeater feeds.
 
 You just need to execute
 ```
@@ -36,7 +36,7 @@ ds-feeds feedbase|f <method> [args...]
 ```
 or
 ```
-ds-feeds aggregator|a <method> [args...]
+ds-feeds repeater|r <method> [args...]
 ```
 
 ### List of commands
@@ -61,23 +61,23 @@ set_label         [feedbaseId, labelText]
 ```
 
 ```
-ds-feeds aggregator --help
+ds-feeds repeater --help
 
-inspect           [aggregatorId]
-owner             [aggregatorId]
-label             [aggregatorId]
-minimumValid      [aggregatorId]
-feedsQuantity     [aggregatorId]
-get               [aggregatorId]
-tryGet            [aggregatorId]
-tryGetFeed        [aggregatorId, feedPosition]
-getFeedInfo       [aggregatorId, feedPosition]
+inspect           [repeaterId]
+owner             [repeaterId]
+label             [repeaterId]
+minimumValid      [repeaterId]
+feedsQuantity     [repeaterId]
+get               [repeaterId]
+tryGet            [repeaterId]
+tryGetFeed        [repeaterId, feedPosition]
+getFeedInfo       [repeaterId, feedPosition]
 
 claim             [] (minimumValid = 1)
 claim             [minimumValid]
-set               [aggregatorId, feedbaseAddress, feedbaseId] (adding new feedbase on aggregator)
-set               [aggregatorId, feedPosition, feedbaseAddress, feedbaseId] (editing feedbase on aggregator)
-unset             [aggregatorId, feedPosition]
+set               [repeaterId, feedbaseAddress, feedbaseId] (adding new feedbase on repeater)
+set               [repeaterId, feedPosition, feedbaseAddress, feedbaseId] (editing feedbase on repeater)
+unset             [repeaterId, feedPosition]
 set_owner         [id, ownerAddress]
 set_label         [id, labelText]
 set_minimumValid  [id, labelText]

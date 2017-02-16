@@ -3,16 +3,16 @@
 const pkg = require('./package.json');
 const prettyjson = require('prettyjson');
 const program = require('commander');
-const CLI = require('clui');
+// const CLI = require('clui');
 const inquirer = require('inquirer');
 const Preferences = require('preferences');
 const web3 = require('./web3');
 const utils = require('./utils');
 const feedbase = require('./feedbase');
-const aggregator = require('./aggregator');
+const repeater = require('./repeater');
 
-const Spinner = CLI.Spinner;
-const status = new Spinner('Connecting to network...');
+// const Spinner = CLI.Spinner;
+// const status = new Spinner('Connecting to network...');
 
 const prefs = new Preferences('com.makerdao.feeds');
 
@@ -45,7 +45,7 @@ function getDefaultAccount() {
 }
 
 function askForAddress(_type) {
-  const type = _type === 'feedbase' ? 'feedbase' : 'aggregator';
+  const type = _type === 'feedbase' ? 'feedbase' : 'repeater';
   if (prefs[type]) {
     return Promise.resolve({ address: prefs[type] });
   }
@@ -64,9 +64,8 @@ function askForAddress(_type) {
 }
 
 function runMethod(type, method, args) {
-  status.start();
+  // status.start();
   utils.getNetwork().then((network) => {
-    status.stop();
     prefs.network = network;
     return getDefaultAccount();
   })
@@ -77,10 +76,11 @@ function runMethod(type, method, args) {
   })
   .then((answer) => {
     prefs[type] = answer.address;
-    const dapple = type === 'feedbase' ? feedbase(answer.address, prefs.network) : aggregator(answer.address, prefs.network);
+    const dapple = type === 'feedbase' ? feedbase(answer.address, prefs.network) : repeater(answer.address, prefs.network);
     if (dapple[method]) {
       if (method === 'inspect') {
-        console.log('Getting result... Please wait.');
+        // console.log('Getting result... Please wait.');
+        // status.stop();
         dump(dapple.inspect(...utils.prepareArgs(args, 'bytes12')));
       } else {
         const setterMethod = method === 'claim' || method === 'set' || method.indexOf('set_') !== -1 || method === 'unset';
@@ -89,18 +89,18 @@ function runMethod(type, method, args) {
         func = setterMethod ? func : func.call;
         const preparedArgs = subMethod ? utils.prepareArgs(args, subMethod) : args;
         if (setterMethod) {
-          console.log('Waiting for your approval... Please sign the transaction.');
+          // status.message('Waiting for your approval... Please sign the transaction.');
         } else {
-          console.log('Getting result... Please wait.');
+          // console.log('Getting result... Please wait.');
         }
         func(...preparedArgs, (e, r) => {
           if (!e) {
             if (!e) {
               if (setterMethod) {
                 // It means we are calling a writing method
-                console.log(`Transaction ${r} was generated. Waiting for confirmation...`);
-
+                // status.message(`Transaction ${r} generated. Waiting for confirmation...`);
                 dapple.filter({}, (err, id) => {
+                  // status.stop();
                   if (err) {
                     console.log('Error: ', err.message);
                   } else if (dapple.owner(id) === prefs.account) {
@@ -123,7 +123,7 @@ function runMethod(type, method, args) {
     }
   })
   .catch((error) => {
-    status.stop();
+    // status.stop();
     console.log(error);
     process.exit(1);
   });
@@ -133,7 +133,8 @@ program
   .version(pkg.version)
   .option('-c, --clear', 'clear user preferences')
   .option('-a, --account [account]', 'set default account')
-  .option('-i, --info', 'prints default information');
+  .option('-i, --info', 'prints default information')
+  .option('--no-color', 'no color on outputs');
 
 program
   .command('feedbase <method> [args...]')
@@ -145,11 +146,11 @@ program
   });
 
 program
-  .command('aggregator <method> [args...]')
-  .alias('a')
-  .description('interact with a feed aggregator contract')
+  .command('repeater <method> [args...]')
+  .alias('r')
+  .description('interact with a feed repeater contract')
   .action((method, args) => {
-    runMethod('aggregator', method, args);
+    runMethod('repeater', method, args);
   });
 
 program.on('--help', () => {
@@ -157,8 +158,8 @@ program.on('--help', () => {
   console.log('');
   console.log('    $ feeds feedbase claim');
   console.log('    $ feeds feedbase set_label 3 "My Label"');
-  console.log('    $ feeds aggregator claim -a 0x929be46495338d84ec78e6894eeaec136c21ab7b');
-  console.log('    $ feeds aggregator inspect 1');
+  console.log('    $ feeds repeater claim -a 0x929be46495338d84ec78e6894eeaec136c21ab7b');
+  console.log('    $ feeds repeater inspect 1');
   console.log('');
 });
 
@@ -178,9 +179,9 @@ if (program.account) {
   } else if (web3.isAddress(program.account)) {
     prefs.account = program.account;
     web3.eth.defaultAccount = program.account;
-    console.log('Set default account');
+    console.log('Default account set');
   } else {
-    console.log('Error: account invalid');
+    console.log('Error: invalid account');
   }
 }
 
