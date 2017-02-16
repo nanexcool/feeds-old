@@ -134,8 +134,8 @@ program
   .version(pkg.version)
   .option('-c, --clear', 'clear user preferences')
   .option('-a, --account [account]', 'set default account')
-  .option('-i, --info', 'prints default information')
-  .option('--no-color', 'no color on outputs');
+  .option('-i, --info', 'prints default information');
+  // .option('--no-color', 'no color on outputs');
 
 program
   .command('feedbase <method> [args...]')
@@ -231,4 +231,6 @@ if (program.info) {
   dump(prefs);
 }
 
-// if (!program.args.length) program.help();
+if (!program.args.length) {
+  program.help();
+}
