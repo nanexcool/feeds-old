@@ -16,8 +16,9 @@ const repeater = require('./repeater');
 
 const prefs = new Preferences('com.makerdao.feeds');
 
-function dump(data, options = {}) {
-  console.log(prettyjson.render(data, options));
+function dump(data) {
+  // console.log(prettyjson.render(data, options));
+  console.log(JSON.stringify(data, null, 2));
 }
 
 function clearPreferences() {
@@ -141,6 +142,24 @@ program
   .alias('feed')
   .alias('f')
   .description('interact with a feedbase contract')
+  .on('--help', () => {
+    console.log('');
+    console.log('    inspect           [id]');
+    console.log('    owner             [id]');
+    console.log('    label             [id]');
+    console.log('    timestamp         [id]');
+    console.log('    expiration        [id]');
+    console.log('    expired           [id]');
+    console.log('    get               [id]');
+    console.log('    tryGet            [id]');
+    console.log('');
+    console.log('    claim');
+    console.log('    set               [id, value, expiration]');
+    console.log('    set               [id, value] (expiration = unlimited)');
+    console.log('    set_owner         [id, ownerAddress]');
+    console.log('    set_label         [id, labelText]');
+    console.log('');
+  })
   .action((method, args) => {
     runMethod('feedbase', method, args);
   });
@@ -149,6 +168,29 @@ program
   .command('repeater <method> [args...]')
   .alias('r')
   .description('interact with a feed repeater contract')
+  .on('--help', () => {
+    console.log('  Methods:');
+    console.log('');
+    console.log('    inspect           [id]');
+    console.log('    owner             [id]');
+    console.log('    label             [id]');
+    console.log('    minimumValid      [id]');
+    console.log('    feedsQuantity     [id]');
+    console.log('    get               [id]');
+    console.log('    tryGet            [id]');
+    console.log('    tryGetFeed        [id, feedPosition]');
+    console.log('    getFeedInfo       [id, feedPosition]');
+    console.log('');
+    console.log('    claim             (minimumValid = 1)');
+    console.log('    claim             [minimumValid]');
+    console.log('    set               [id, feedbaseAddress, feedId] (adding new feedbase on repeater)');
+    console.log('    set               [id, feedPosition, feedbaseAddress, feedId] (editing feedbase on repeater)');
+    console.log('    unset             [id, feedPosition]');
+    console.log('    set_owner         [id, ownerAddress]');
+    console.log('    set_label         [id, labelText]');
+    console.log('    set_minimumValid  [id, labelText]');
+    console.log('');
+  })
   .action((method, args) => {
     runMethod('repeater', method, args);
   });
